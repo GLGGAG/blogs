@@ -1,7 +1,9 @@
 
 drop table if exists category;
 
-drop table if exists star;
+drop table if exists articleStar;
+
+drop table if exists articleRead;
 
 drop table if exists article;
 
@@ -23,8 +25,8 @@ create table category
   categoryNo           INT NOT NULL comment '类目编号',
   priority             INT NOT NULL DEFAULT 0 COMMENT '类目优先级',
   categoryParentNo     INT NOT NULL DEFAULT 0 comment '类目父级编号',
-  createTime           datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-  updateTime           datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP  comment '修改时间',
+  createTime           DATETIME  NOT NULL comment '创建时间',
+  updateTime           DATETIME  NOT NULL  comment '修改时间',
   version              int DEFAULT 0 comment '版本号',
   deleted              bit DEFAULT FALSE comment '是否删除',
   primary key (id)
@@ -41,8 +43,8 @@ create table article
   tags                 VARCHAR(20) COMMENT '文章标签名称(来自文章父级类目名称)',
   titleImage           VARCHAR(100) COMMENT '标题图片',
   content              TEXT COMMENT '文章内容',
-  createTime           datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-  updateTime           datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP  comment '修改时间',
+  createTime           DATETIME  NOT NULL  comment '创建时间',
+  updateTime           DATETIME  NOT NULL  comment '修改时间',
   version              int DEFAULT 0 comment '版本号',
   deleted              bit DEFAULT FALSE comment '是否删除',
   primary key (id)
@@ -50,13 +52,27 @@ create table article
 /*==============================================================*/
 /* Table:文章star表                                           */
 /*==============================================================*/
-create table star
+create table articleStar
 (
-  id                   int not null AUTO_INCREMENT comment '主键',
+  id                    int not null AUTO_INCREMENT comment '主键',
   articleNo            INT NOT NULL COMMENT '文章编号',
-  number               int COMMENT '点赞次数',
-  createTime           datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-  updateTime           datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP  comment '修改时间',
+  starNumber           int NOT NULL DEFAULT 0 COMMENT '点赞次数',
+  createTime           DATETIME  NOT NULL  comment '创建时间',
+  updateTime           DATETIME  NOT NULL   comment '修改时间',
+  version              int DEFAULT 0 comment '版本号',
+  deleted              bit DEFAULT FALSE comment '是否删除',
+  primary key (id)
+);
+/*==============================================================*/
+/* Table:文章阅读表                                           */
+/*==============================================================*/
+create table articleRead
+(
+  id                    int not null AUTO_INCREMENT comment '主键',
+  articleNo            INT NOT NULL COMMENT '文章编号',
+  nreadNmber           int NOT NULL DEFAULT 0 COMMENT '文章阅读次数',
+  createTime           DATETIME  NOT NULL  comment '创建时间',
+  updateTime           DATETIME  NOT NULL   comment '修改时间',
   version              int DEFAULT 0 comment '版本号',
   deleted              bit DEFAULT FALSE comment '是否删除',
   primary key (id)
@@ -71,8 +87,8 @@ create table visitor
   device                VARCHAR(20) comment '访客设备',
   behavior              VARCHAR(20) comment '访客浏览行为（点击主页或者点击其他页面）',
   articleNo             INT  COMMENT '访客点击文章编号(如果访客点击文章，则记录文章编号)',
-  createTime            datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-  updateTime            datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP  comment '修改时间',
+  createTime            DATETIME  NOT NULL  comment '创建时间',
+  updateTime            DATETIME  NOT NULL   comment '修改时间',
   version               int DEFAULT 0 comment '版本号',
   deleted               bit DEFAULT FALSE comment '是否删除',
   primary key (id)
@@ -85,8 +101,8 @@ create table adminLog
   id                     int not null AUTO_INCREMENT comment '主键',
   ip                     VARCHAR(50)  COMMENT '管理员登陆ip',
   device                 VARCHAR(20) comment '管理员设备',
-  createTime             datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-  updateTime             datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP  comment '修改时间',
+  createTime             DATETIME  NOT NULL  comment '创建时间',
+  updateTime             DATETIME  NOT NULL   comment '修改时间',
   version                int DEFAULT 0 comment '版本号',
   deleted                bit DEFAULT FALSE comment '是否删除',
   primary key (id)
@@ -105,8 +121,8 @@ create table admin
   avator                 VARCHAR(50) COMMENT  '头像',
   introduction           VARCHAR(100) COMMENT '自我介绍',
   motto                  VARCHAR(50) COMMENT '座右铭',
-  createTime             datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-  updateTime             datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP comment '修改时间',
+  createTime             DATETIME  NOT NULL  comment '创建时间',
+  updateTime             DATETIME  NOT NULL comment '修改时间',
   version                int DEFAULT 0 comment '版本号',
   deleted                bit DEFAULT FALSE comment '是否删除',
   primary key (id)
@@ -120,8 +136,8 @@ create table keyword
   id                    int not null AUTO_INCREMENT comment '主键',
   keyword               VARCHAR(20)  COMMENT '关键字',
   articleNo             INT NOT NULL COMMENT '文章编号',
-  createTime            datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-  updateTime            datetime NOT NULL  DEFAULT CURRENT_TIMESTAMP  comment '修改时间',
+  createTime            DATETIME  NOT NULL  comment '创建时间',
+  updateTime            DATETIME  NOT NULL   comment '修改时间',
   version               int DEFAULT 0 comment '版本号',
   deleted               bit DEFAULT FALSE comment '是否删除',
   primary key (id)
