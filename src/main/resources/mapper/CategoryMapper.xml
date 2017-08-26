@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blogs.mapper.CategoryMapper">
+
+    <resultMap type="com.blogs.vos.CategoryVo" id="categoryVoResultMap">
+        <result column="categoryName" property="categoryName"/>
+        <result column="categoryNo" property="categoryNo"/>
+        <result column="categoryParentNo" property="categoryParentNo"/>
+        <collection property="subCategoryVo" column="categoryNo" select="com.blogs.mapper.CategoryMapper.totalSubCategory"/>
+    </resultMap>
+
+    <select id="totalSubCategory" resultMap="categoryVoResultMap">
+        SELECT
+            c1.categoryName,
+            c1.categoryNo,
+            c1.categoryParentNo
+        FROM
+            category c1
+        WHERE
+              c1.categoryParentNo=#{categoryNo}
+        AND
+              deleted=false
+    </select>
+
+
+
+
+</mapper>
