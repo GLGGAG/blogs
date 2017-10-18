@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * @Date: 2017/08/23/下午 15:46
  * @Description:
  */
-public class WEBMVCURLRulesConfig  extends WebMvcConfigurationSupport {
+public class WebMvcUrlRulesConfig extends WebMvcConfigurationSupport {
 
     /**
      * setUseSuffixPatternMatch : 设置是否是后缀模式匹配，如“/user”是否匹配/user.*，默认真即匹配；
